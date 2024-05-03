@@ -6,7 +6,7 @@ from datetime import datetime
 import plotly.express as px
 
 
-caminho_do_arquivo = r"C:\Users\micae\OneDrive\Documentos\GitHub\Projeto_Dev_Python\datasets\df.csv"
+caminho_do_arquivo = "datasets\df.csv"
 
 st.set_page_config(layout="wide")
 
@@ -47,5 +47,13 @@ avaliacao_total = df.groupby("localização")[["classificação_cliente_compra"]
 fig_5 = px.bar(avaliacao_total, x="localização", y="classificação_cliente_compra", title="Classificação por Localização")
 col5.plotly_chart(fig_5, use_container_width=True)
 
+fig_6 = px.pie(df, values='valor_compra(usd)', names='categoria', title='Participação de Vendas por Categoria')
+st.plotly_chart(fig_6)
 
+contagem_codigos = df['código_promocional'].value_counts().reset_index()
+contagem_codigos.columns = ['código_promocional', 'Contagem']
 
+fig_7 = px.bar(contagem_codigos, x='código_promocional', y='Contagem', title='Contagem de Uso de Códigos Promocionais')
+st.plotly_chart(fig_7, use_container_width=True)
+
+df
