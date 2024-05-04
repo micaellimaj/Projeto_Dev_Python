@@ -56,4 +56,3 @@ contagem_codigos.columns = ['código_promocional', 'Contagem']
 fig_7 = px.bar(contagem_codigos, x='código_promocional', y='Contagem', title='Contagem de uso de códigos promocionais')
 st.plotly_chart(fig_7, use_container_width=True)
 
-df
