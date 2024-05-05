@@ -4,11 +4,18 @@ import streamlit as st
 import webbrowser
 from datetime import datetime
 import plotly.express as px
+import dash
 
 
 caminho_do_arquivo = "datasets\df.csv"
 
 st.set_page_config(layout="wide")
+
+if "data" not in st.session_state:
+    df = pd.read_csv(caminho_do_arquivo)
+    st.session_state["data"] = df
+
+
 
 st.write("# Análise de Perfil de Clientes ")
 st.sidebar.markdown("teste")
@@ -25,7 +32,7 @@ st.markdown(
     """
 )
 
-df = pd.read_csv(caminho_do_arquivo)
+
 
 col1, col2 = st.columns(2)
 col3, col4, col5 = st.columns(3)
@@ -56,4 +63,4 @@ contagem_codigos.columns = ['código_promocional', 'Contagem']
 fig_7 = px.bar(contagem_codigos, x='código_promocional', y='Contagem', title='Contagem de uso de códigos promocionais')
 st.plotly_chart(fig_7, use_container_width=True)
 
-df
+
