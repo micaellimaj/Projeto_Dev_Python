@@ -5,23 +5,59 @@ import webbrowser
 from datetime import datetime
 import plotly.express as px
 import dash
-from dash import dcc, html
-from geopy.geocoders import Nominatim
-
-df = st.session_state["data"]
+import dash_core_components as dcc
+import dash_html_components as html
+import plotly.graph_objs as go 
 
 app = dash.Dash(__name__)
 
+caminho_do_arquivo = "datasets\\df.csv"
+df = pd.read_csv(caminho_do_arquivo)
 
-fig_6 = px.pie(df, values='valor_compra(usd)', names='categoria', title='Participação de vendas por categoria')
-st.plotly_chart(fig_6)
+# conexão entre as páginas
 
 
-contagem_codigos = df['código_promocional'].value_counts().reset_index()
-contagem_codigos.columns = ['código_promocional', 'Contagem']
 
-fig_7 = px.bar(contagem_codigos, x='código_promocional', y='Contagem', title='Contagem de uso de códigos promocionais')
-#st.plotly_chart(fig_7, use_container_width=True)
+# fig1 
+"""
+fig = px.scatter(df,x = "valor_compra(usd)", y = "idade",
+                 size = "classificação_cliente_compra", color = "localização", hover_name="localização",
+                 log_x = True, size_max=60)
+
+app.layout = html.Div([
+    dcc.Graph(
+        id = 'valor-compra-vs-cliente',
+        figure = fig
+    )                      
+])
+1
+app.run_server(debug=True)
+"""
+app.layout = html.Div([
+    dcc.Graph(id='valor-compra-vs-cliente')
+])
+
+# Callback para atualizar o gráfico
+@app.callback(
+    dash.dependencies.Output('valor-compra-vs-cliente', 'figure'),
+    [dash.dependencies.Input('input-data-date-picker', 'date')])
+def update_graph(selected_date):
+    filtered_df = df[df['data'] == selected_date]  # Supondo que 'data' seja uma coluna de datas
+    fig = go.Figure(data=[go.Scatter(x=filtered_df['valor_compra(usd)'], y=filtered_df['idade'],
+                                     mode='markers',
+                                     marker=dict(size=filtered_df['classificação_cliente_compra']*10,
+                                                  color=filtered_df['localização']))])
+    fig.update_layout(title='Valor Compra vs Idade',
+                      xaxis_title='Valor Compra (USD)',
+                      yaxis_title='Idade')
+    return fig
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
+
+
+
+
 
 
 

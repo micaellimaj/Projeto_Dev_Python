@@ -60,5 +60,3 @@ fig_5 = px.bar(avaliacao_total, x="localização", y="classificação_cliente_co
 col5.plotly_chart(fig_5, use_container_width=True)
 
 
-
-
