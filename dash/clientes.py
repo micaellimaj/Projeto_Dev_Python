@@ -10,6 +10,7 @@ from dash import html
 import plotly.graph_objs as go
 
 app = dash.Dash(__name__)
+server = app.server
 
 caminho_do_arquivo = "datasets\\df.csv"
 df = pd.read_csv(caminho_do_arquivo)
