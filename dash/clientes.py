@@ -8,12 +8,19 @@ import dash
 from dash import dcc
 from dash import html 
 import plotly.graph_objs as go
+from dash.dependencies import Input, Output
 
+
+
+
+# Inicialize o aplicativo Dash
 app = dash.Dash(__name__)
 server = app.server
 
 caminho_do_arquivo = "datasets\\df.csv"
 df = pd.read_csv(caminho_do_arquivo)
+
+# --------------------------------------- GRÁFICOS PÁGINA  1  ------------------------------------------- #
 
 # Primeiro gráfico
 fig1 = px.scatter(df, x="valor_compra(usd)", y="idade",
@@ -80,50 +87,79 @@ media_idade = df['idade'].mean()
 media_transacoes = df['transações_concluidas_cliente'].mean()
 quantidade_compras = len(df)
 
+# --------------------------------------- GRÁFICOS PÁGINA  1 (FIM) ------------------------------------------- #
 
-# Layout da aplicação com ambos os gráficos
-# Layout da aplicação com cartões e gráficos
-# Layout da aplicação com cartões e gráficos
-app.layout = html.Div([
-        # Título do aplicativo
-        html.H1('Sales Dash', style={'text-align': 'center'}),
-    
+
+# Defina o layout da página inicial
+def layout_pagina_inicial(total_compras, media_avaliacao, quantidade_compras, media_idade, media_transacoes, fig1, fig2, fig3, fig4):
+    return html.Div([
         # Divisão para os cartões
         html.Div([
+            html.Div([
+                html.H3(' Total de Compras '),
+                html.H4(f'${total_compras:.2f}')
+            ], className='card'),
+            html.Div([
+                html.H3(' Média de Avaliações '),
+                html.H4(f'{media_avaliacao:.2f}')
+            ], className='card'),
+            html.Div([
+                html.H3(' Quantidade de Compras '),
+                html.H4(f'{quantidade_compras}')
+            ], className='card'),
+            html.Div([
+                html.H3(' Média de Idade '),
+                html.H4(f'{media_idade:.2f}')
+            ], className='card'),
+            html.Div([
+                html.H3(' Média de Transações '),
+                html.H4(f'{media_transacoes:.2f}')
+            ], className='card'),
+        ], className='card-container', style={'display': 'flex' , 'justify-content': 'center'}),
+        
+        # Divisão para os gráficos
         html.Div([
-            html.H3(' Total de Compras '),
-            html.H4(f'${total_compras:.2f}')
-        ], className='card'),
+            html.Div([
+                dcc.Graph(id='valor-compra-vs-cliente', figure=fig1),
+                dcc.Graph(id='boxplot-metodo-pagamento', figure=fig2),
+            ], style={'display': 'flex', 'margin-bottom': '20px'}),
+        ]),
         html.Div([
-            html.H3(' Média de Avaliações '),
-            html.H4(f'{media_avaliacao:.2f}')
-        ], className='card'),
-        html.Div([
-            html.H3(' Quantidade de Compras '),
-            html.H4(f'{quantidade_compras}')
-        ], className='card'),
-        html.Div([
-            html.H3(' Média de Idade '),
-            html.H4(f'{media_idade:.2f}')
-        ], className='card'),
-        html.Div([
-            html.H3(' Média de Transações '),
-            html.H4(f'{media_transacoes:.2f}')
-        ], className='card'),
-    ], className='card-container', style={'display': 'flex' , 'justify-content': 'center'}),
+            dcc.Graph(id='barras-sexo-valorcompra', figure=fig3),
+            dcc.Graph(id='pizza-sexo-valorcompra', figure=fig4)
+        ], style={'display': 'flex'})
+    ], style={'display': 'flex', 'flex-direction': 'column', 'margin-bottom': '20px'})
+
+# Define o layout da segunda página
+def layout_pagina2():
+    return html.Div([
+        html.H1('Página 2'),
+        html.P('Conteúdo da página 2 vai aqui.')
+    ])
+
+
+
+# Rotas e callbacks
+@app.callback(
+    Output('page-content', 'children'),
+    [Input('url', 'pathname')]
+)
+
+def display_page(pathname):
+    if pathname == '/' or pathname == '/pagina-inicial':
+        return layout_pagina_inicial(total_compras, media_avaliacao, quantidade_compras, media_idade, media_transacoes, fig1, fig2, fig3, fig4)
+    elif pathname == '/pagina-2':
+        return layout_pagina2()
+    else:
+        return 'Página não encontrada'
     
-    # Divisão para os gráficos
-    html.Div([
-        html.Div([
-            dcc.Graph(id='valor-compra-vs-cliente', figure=fig1),
-            dcc.Graph(id='boxplot-metodo-pagamento', figure=fig2),
-        ], style={'display': 'flex', 'margin-bottom': '20px'}),
-    ]),
-    html.Div([
-        dcc.Graph(id='barras-sexo-valorcompra', figure=fig3),
-        dcc.Graph(id='pizza-sexo-valorcompra', figure=fig4)
-    ], style={'display': 'flex'})
-], style={'display': 'flex', 'flex-direction': 'column', 'margin-bottom': '20px'})
+
+
+# Layout principal
+app.layout = html.Div([
+    dcc.Location(id='url', refresh=False),
+    html.Div(id='page-content')
+])
 
 
 if __name__ == '__main__':
