@@ -11,7 +11,7 @@ from dash import html
 import plotly.graph_objs as go
 from dash.dependencies import Input, Output
 from app import app
-from dash_bootstrap_components as dbc
+import dash_bootstrap_components as dbc
 
 
 # /////////////////// Layout  ///////////////////////// #

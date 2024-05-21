@@ -7,41 +7,44 @@ import plotly.express as px
 import dash
 from dash import dcc
 from dash import html 
-from dash_bootstrap_components as dbc
+import dash_bootstrap_components as dbc
 import plotly.graph_objs as go
 from dash.dependencies import Input, Output, State
 import os
 
 
 # -------------------- LAYOUT ----------------------- #
+
+
 layout = dbc.Col([
     html.H1("MyBudget", className="text-primary"),
-    html.P("By Unifavip Students", className="text-info")
-    html.Hr(),
+    html.P("By Unifavip Students", className="text-info"),
+    html.Hr(),  # Adicione a vírgula aqui
 
     # SEÇÃO PERFIL 
+    dbc.Button(
+        id='botão_avatar',
+        children=[
+            html.Img(
+                src='/assests/img_hom.png',
+                id='avatar_change',
+                alt='Avatar',
+                className='perfil_avatar'
+            )
+        ],
+        style={'background-color': 'transparent', 'border-color': 'transparent'}
+    ),
 
-    dbc.Button(id='botão_avatar',
-               children=[html.Img(src='/assests/img_hom.png', id='avatar_change', alt='Avatar',className='perfil_avatar')], style={'background-color': 'transparent','border-color': 'transparent'}
-               )
-    
- ---------------------   # SEÇÃO NOVO ----------------------------------------------
-
-
-# SEÇÃO NAV --------------------------------------------------
-    html.Hr()
+    # SEÇÃO NAV --------------------------------------------------
+    html.Hr(),
     dbc.Nav(
-    [
-        dbc.NavLink("Dashboards", href="/dashboards", active="exact"),
-        dbc.NavLink("Pagina", href="/pagina", active="exact"),
-    ], vertical=True, pills=True, id='nav_buttons', style={"margin-bottom":"50px"}),
-
-    ], id='sidebar_completa')
-    
-
-
-
-## -------------------------------------- callbacks --------------------- ##
-
-# pop-up receita
-
+        [
+            dbc.NavLink("Dashboards", href="/dashboards", active="exact"),
+            dbc.NavLink("Pagina", href="/pagina", active="exact"),
+        ],
+        vertical=True,
+        pills=True,
+        id='nav_buttons',
+        style={"margin-bottom": "50px"}
+    )
+], id='sidebar_completa')

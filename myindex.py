@@ -7,7 +7,7 @@ import plotly.express as px
 import dash
 from dash import dcc
 from dash import html 
-from dash_bootstrap_components as dbc
+import dash_bootstrap_components as dbc
 import plotly.graph_objs as go
 from dash.dependencies import Input, Output
 
@@ -20,17 +20,15 @@ content = html.Div(id="page-content")
 
 app.layout = dbc.Container(children=[
     dbc.Row([
-        dbc.col([
+        dbc.Col([
             dcc.Location(id='url'),
-            sidebar.layout
-        ]), md = 2, style = {'background-color': 'red', 'height':'1080px'}),
+            sidebar
+        ], md=2, style={'background-color': 'red', 'height': '1080px'}),
         dbc.Col([
             content
-        ], md = 10, style = {'background-color': 'red', 'height':'1080px'})
+        ], md=10, style={'background-color': 'red', 'height': '1080px'})
     ])
-
-
-], fluid=True,)
+], fluid=True)
 
 @app.callback(
     Output('page-content', 'children'),
