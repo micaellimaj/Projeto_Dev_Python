@@ -1,14 +1,8 @@
-# Importando a biblioteca Streamlit para criar a aplicação web
+# Importando as Bibliotecas
 import streamlit as st
-# Importando Pandas para manipulação de dados
 import pandas as pd
-# Importando NumPy para operações numéricas
 import numpy as np
-# Importando Matplotlib para gráficos estáticos
-#import matplotlib.pyplot as plt
-
-# Importando Seaborn para gráficos mais sofisticados
-#import seaborn as sns
+import plotly.express as px
 
 
 st.write("Análise de vendas")
@@ -23,4 +17,4 @@ col3, col4, col5 = st.columns(3)
 
 # Fig 1 (Teste)
 fig_1 = px.bar(df_data, x = "item_comprado", y="valor_compra(usd)", title="valor comprado por item")
-col1.ploty_chart(fig_1, use_container_width=True)
+st.plotly_chart(fig_1, use_container_width=True)
