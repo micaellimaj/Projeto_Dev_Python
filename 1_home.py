@@ -97,3 +97,4 @@ col3, col4, col5 = st.columns(3)
 
 fig_1 = px.bar(df_data, x = "item_comprado", y="valor_compra(usd)", title="valor comprado por item")
 st.plotly_chart(fig_1, use_container_width=True)
+

@@ -1,6 +1,0 @@
-pandas==1.4.0
-numpy==1.22.0
-streamlit==1.11.0
-plotly==5.5.0
-dash==2.0.0
-gunicorn
