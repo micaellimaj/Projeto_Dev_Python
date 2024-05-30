@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 
-st.set_page_config(page_title="Sales Dashboard", page_icon=":bar_chart:", layout="wide")
+st.set_page_config(page_title="Sales Dashboard - Estoque", page_icon=":bar_chart:", layout="wide")
 
 
 #if "data" not in st.session_state:
@@ -14,7 +14,10 @@ st.session_state["data"] = df_data
 st.write("Análise de dados")
 
 # SIDEBAR --------------------------------------------------
+st.sidebar.image("imagem/logo.jpeg", caption="Online Analytics")
+
 st.sidebar.markdown("Desenvolvido por Estudantes Unifavip")
+
 
 st.sidebar.header("Selecione um filtro : ")
 sexo = st.sidebar.multiselect(
@@ -47,8 +50,10 @@ df_data_selection = df_data.query(
 
 # ----------------- MAINPAGE -----------------
 
-st.title(":bar_chart: Sales Dashboard 1")
+st.title(":bar_chart: Sales Dashboard - Estoque de Produtos")
 st.markdown("##")
+
+
 
 # TOP KPI'S
 total_compras = int(df_data["valor_compra(usd)"].sum())
@@ -58,21 +63,22 @@ star_avaliacao = ":star:" * int(round(media_avaliacao, 0))
 total_transacoes = int(df_data["transações_concluidas_cliente"].sum())
 media_idade = round(df_data["idade"].mean(),1)
 
-left_column,  middle_left_column, middle_column, middle_right_column, right_column = st.columns(5)
+
+left_column,  middle_left_column, middle_column, middle_right_column, right_column = st.columns(5, gap='large')
 with left_column:
-    st.subheader("Total Vendas:")
+    st.info("📊 Total Vendas:")
     st.subheader(f"US $ {total_compras:,}")
 with middle_left_column:
-    st.subheader("Total Transações Conc:")
+    st.info("📊 Transações Concluídas")
     st.subheader(f"{total_transacoes}")
 with middle_column:
-    st.subheader("Média de Avaliação:")
+    st.info("📊 Média de Avaliação:")
     st.subheader(f"{media_avaliacao} {star_avaliacao}")
 with middle_right_column:
-    st.subheader("Média de idade: ")
+    st.info("📊 Média de idade: ")
     st.subheader(f"{media_idade:,}")
 with right_column:
-    st.subheader("Total Clientes: ")
+    st.info("📊 Total Clientes: ")
     st.subheader(f"{total_clientes:,}")
 
 st.markdown("---")
@@ -120,6 +126,4 @@ df_4 = df_data[["item_comprado","id_cliente"]].groupby("item_comprado").agg("cou
 
 fig_4 = px.bar(df_4,x="id_cliente", y="item_comprado", title="Quantidade de Clientes por item comprado")
 col4.plotly_chart(fig_4, use_container_width=True)
-
-
 
