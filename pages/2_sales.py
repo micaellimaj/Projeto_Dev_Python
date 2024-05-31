@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 
 st.set_page_config(page_title="Sales Dashboard - Vendas", page_icon=":bar_chart:", layout="wide")
 
@@ -86,36 +87,43 @@ st.markdown("---")
 # Divisão da tela
 
 col1, col2 = st.columns(2)
-col3, col4, col5 = st.columns(3)
+col3, col4 = st.columns(2)
+col5, col6 = st.columns(2)	
 
 # Fig 1 
 
-
-fig1 = px.box(df_data, x="método_pagamento", y="valor_compra(usd)")
+fig1 = px.treemap(df_data, path=['categoria','item_comprado'], values='valor_compra(usd)', title='Valor de Compra(usd) por categoria e itens')
 col1.plotly_chart(fig1, use_container_width=True)
 
 # Fig 2
-fig2 = px.choropleth(df_data,
+
+fig2 = px.bar(df_data,x="frequência_compras_cliente", y="valor_compra(usd)", title="Valor da Compra por Frequência de Compra do Cliente")
+col2.plotly_chart(fig2, use_container_width=True)
+
+
+# Fig 3
+fig3 = px.choropleth(df_data,
                     locations='codigo_regiao', # Substitua 'localização' pelo nome correto da coluna que contém os códigos de localização
                     locationmode='USA-states', # Ou 'region codes', dependendo do seu conjunto de dados
                     color='valor_compra(usd)', # Variável de cor
                     hover_name='localização', # Nome da coluna para mostrar ao passar o mouse
                     title='Valor de Compra por Localização',
-                    color_continuous_scale='Viridis'
+                    color_continuous_scale='Viridis',
+                    scope='usa'
                     )
-col2.plotly_chart(fig2, use_container_width=True)
-
-# fig3 
-fig3 = px.bar(df_data,x="valor_compra(usd)", y="tipo_envio_cliente", title="Quantidade de Clientes por Cor do item")
 col3.plotly_chart(fig3, use_container_width=True)
 
-#fig4 
-
-fig4 = px.pie(df_data, values='valor_compra(usd)', names='categoria', title='Tamanho do item por quantidade de clientes')
+# fig 4
+fig4 = px.bar(df_data,x="valor_compra(usd)", y="tipo_envio_cliente", title="Valor da Compra por tipo de envio")
 col4.plotly_chart(fig4, use_container_width=True)
 
-# fig 5
-
-fig5 = px.bar(df_data,y="valor_compra(usd)", x="item_comprado", title="Quantidade de Clientes por Categoria")
+# fig 5 
+fig5 = px.bar(df_data,x="método_pagamento", y="valor_compra(usd)", title="Valor da Compra por Método de Pagamento")
 col5.plotly_chart(fig5, use_container_width=True)
+
+# Fig 6
+fig6 = px.bar(df_data,x="temporada_compra", y="valor_compra(usd)", title="Valor da Compra por Temporada")
+col6.plotly_chart(fig6, use_container_width=True)
+
+
 

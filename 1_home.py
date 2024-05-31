@@ -97,28 +97,23 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 
 # Divisão da tela (Gráficos)
 
-col1, col2, col3 = st.columns(3)
-col4, col5, col6 = st.columns(3)
+col1, col2 = st.columns(2)
+col3, col4 = st.columns(2)
+col5, col6 = st.columns(2)	
 
+df_id = df_data.groupby(["codigo_regiao", "localização","categoria","tamanho_item","cor_item","item_comprado","método_pagamento","tipo_envio_cliente","frequência_compras_cliente"])["id_cliente"].count().reset_index()
 
-# Gráfico 1
-df_1 = df_data[["categoria","id_cliente"]].groupby("categoria").agg("count").reset_index()
-
-fig_1 = px.bar(df_1,y="id_cliente", x="categoria", title="Quantidade de Clientes por Categoria")
-col1.plotly_chart(fig_1, use_container_width=True)
-
+fig1 = px.treemap(df_id, path=['categoria','item_comprado'], values='id_cliente', title='Total de Clientes por categoria e itens')
+col1.plotly_chart(fig1, use_container_width=True)
 
 # Gráfico 2
-df_2 = df_data[["tamanho_item","id_cliente"]].groupby("tamanho_item").agg("count").reset_index()
 
-fig_2 = px.pie(df_2, values='id_cliente', names='tamanho_item', title='Tamanho do item por quantidade de clientes')
-col2.plotly_chart(fig_2, use_container_width=True)
-
-
+fig2 = px.bar(df_id,x="frequência_compras_cliente", y="id_cliente", title="Valor da Compra por Frequência de Compra do Cliente")
+col2.plotly_chart(fig2, use_container_width=True)
 
 # Fig 3
-# Corrigindo o nome da coluna para contagem de id_cliente
-df_3 = df_data.groupby(["codigo_regiao", "localização"])["id_cliente"].count().reset_index()
+
+df_3 = df_id.groupby(["codigo_regiao","localização"])["id_cliente"].count().reset_index()
 
 fig3 = px.choropleth(df_3,
                     locations='codigo_regiao', # Usando os códigos de região como localização
@@ -132,22 +127,17 @@ fig3 = px.choropleth(df_3,
 col3.plotly_chart(fig3, use_container_width=True)
 # Gráfico 4
 
-df_4 = df_data[["cor_item","id_cliente"]].groupby("cor_item").agg("count").reset_index()
 
-fig_4 = px.bar(df_4,x="id_cliente", y="cor_item", title="Quantidade de Clientes por Cor do item")
-col4.plotly_chart(fig_4, use_container_width=True)
+fig4 = px.bar(df_id,x="id_cliente", y="tipo_envio_cliente", title="Valor da Compra por tipo de envio")
+col4.plotly_chart(fig4, use_container_width=True)
 
 # Gráfico 4 
 
-df_5 = df_data[["item_comprado","id_cliente"]].groupby("item_comprado").agg("count").reset_index()
-
-fig_5 = px.bar(df_5,x="id_cliente", y="item_comprado", title="Quantidade de Clientes por item comprado")
-col5.plotly_chart(fig_5, use_container_width=True)
+fig5 = px.bar(df_data,x="método_pagamento", y="id_cliente", title="Valor da Compra por Método de Pagamento")
+col5.plotly_chart(fig5, use_container_width=True)
 
 
 # Gráfico 6
 
-df_6 = df_data[["método_pagamento","id_cliente"]].groupby("método_pagamento").agg("count").reset_index()
-
-fig_6 = px.bar(df_6,y="id_cliente", x="método_pagamento", title="Quantidade de Clientes por Categoria")
-col6.plotly_chart(fig_6, use_container_width=True)
+fig6 = px.bar(df_data,x="temporada_compra", y="id_cliente", title="Valor da Compra por Temporada")
+col6.plotly_chart(fig6, use_container_width=True)
