@@ -5,17 +5,17 @@ import numpy as np
 import plotly.express as px
 import matplotlib.pyplot as plt
 
-st.set_page_config(page_title="Sales Dashboard - Estoque", page_icon=":bar_chart:", layout="wide")
+st.set_page_config(page_title="Clothing Store - Clientes", page_icon=":bar_chart:", layout="wide")
 
 
 #if "data" not in st.session_state:
 df_data = pd.read_csv("datasets/df.csv")
 st.session_state["data"] = df_data
 
-st.write("Análise de dados")
+
 
 # SIDEBAR --------------------------------------------------
-st.sidebar.image("imagem/logo.jpeg", caption="Online Analytics")
+st.sidebar.image("imagem/logo.jpeg", caption="Online Clothing Store")
 
 st.sidebar.markdown("Desenvolvido por Estudantes Unifavip")
 
@@ -27,31 +27,31 @@ sexo = st.sidebar.multiselect(
     default= df_data["sexo"].unique()
 )
 
-assinatura = st.sidebar.multiselect(
+assinatura_cliente = st.sidebar.multiselect(
     "O Cliente possui assinatura : ",
     options= df_data["assinatura_cliente"].unique(),
     default= df_data["assinatura_cliente"].unique()
 )
 
-desconto = st.sidebar.multiselect(
+desconto_compra = st.sidebar.multiselect(
     "O Cliente possui desconto: ",
     options= df_data["desconto_compra"].unique(),
     default= df_data["desconto_compra"].unique()
 )
 
-codigo_promocional = st.sidebar.multiselect(
+código_promocional = st.sidebar.multiselect(
     "O Cliente possui código Promocional: ",
     options= df_data["código_promocional"].unique(),
     default= df_data["código_promocional"].unique()
 )
 
 df_data_selection = df_data.query(
-    "sexo == @sexo & assinatura_cliente == @assinatura & desconto_compra == @desconto & código_promocional == @codigo_promocional"
+    "sexo == @sexo & assinatura_cliente == @assinatura_cliente & desconto_compra == @desconto_compra & código_promocional == @código_promocional"
 )
 
 # ----------------- MAINPAGE -----------------
 
-st.title(":bar_chart: Sales Dashboard - Estoque de Produtos")
+st.title(":bar_chart: Clothing Store - Clientes")
 st.markdown("##")
 
 
@@ -74,7 +74,7 @@ with middle_left_column:
     st.subheader(f"{total_transacoes}")
 with middle_column:
     st.info("📊 Média de Avaliação:")
-    st.subheader(f"{media_avaliacao} {star_avaliacao}")
+    st.subheader(f"{star_avaliacao}")
 with middle_right_column:
     st.info("📊 Média de idade: ")
     st.subheader(f"{media_idade:,}")
@@ -101,14 +101,18 @@ col1, col2 = st.columns(2)
 col3, col4 = st.columns(2)
 col5, col6 = st.columns(2)	
 
-df_id = df_data.groupby(["codigo_regiao", "localização","categoria","tamanho_item","cor_item","item_comprado","método_pagamento","tipo_envio_cliente","frequência_compras_cliente"])["id_cliente"].count().reset_index()
+df_id = df_data.groupby(["codigo_regiao", "localização","categoria","tamanho_item","cor_item","item_comprado","método_pagamento","tipo_envio_cliente","frequência_compras_cliente","temporada_compra"])["id_cliente"].count().reset_index()
 
 fig1 = px.treemap(df_id, path=['categoria','item_comprado'], values='id_cliente', title='Total de Clientes por categoria e itens')
 col1.plotly_chart(fig1, use_container_width=True)
 
 # Gráfico 2
 
-fig2 = px.bar(df_id,x="frequência_compras_cliente", y="id_cliente", title="Valor da Compra por Frequência de Compra do Cliente")
+fig2 = px.bar(df_id,x="frequência_compras_cliente", y="id_cliente", title="Total de Clientes por Frequência de Compra")
+fig2.update_layout(
+    xaxis_title="Frequência de Compras",
+    yaxis_title="Clientes"
+)
 col2.plotly_chart(fig2, use_container_width=True)
 
 # Fig 3
@@ -120,7 +124,7 @@ fig3 = px.choropleth(df_3,
                     locationmode='USA-states', # Ou 'region codes', dependendo do seu conjunto de dados
                     color='id_cliente', # Variável de cor baseada na contagem de id_cliente
                     hover_name='localização', # Nome da coluna para mostrar ao passar o mouse
-                    title='Contagem de Clientes por Localização',
+                    title='Total de Clientes por Localização',
                     color_continuous_scale='Viridis',
                     scope='usa'
                     )
@@ -128,16 +132,29 @@ col3.plotly_chart(fig3, use_container_width=True)
 # Gráfico 4
 
 
-fig4 = px.bar(df_id,x="id_cliente", y="tipo_envio_cliente", title="Valor da Compra por tipo de envio")
+fig4 = px.pie(df_id,values="id_cliente", names="temporada_compra", title="Total de Clientes por tipo de envio")
+fig4.update_traces(textinfo='percent+label')
+fig4.update_layout(
+    legend_title="Temporada Compra",
+    showlegend=True
+)
 col4.plotly_chart(fig4, use_container_width=True)
 
 # Gráfico 4 
 
-fig5 = px.bar(df_data,x="método_pagamento", y="id_cliente", title="Valor da Compra por Método de Pagamento")
+fig5 = px.bar(df_id,x="método_pagamento", y="id_cliente", title="Total de Clientes por Método de Pagamento")
+fig5.update_layout(
+    xaxis_title="Método de Pagamento",
+    yaxis_title="Clientes"
+)
 col5.plotly_chart(fig5, use_container_width=True)
 
 
 # Gráfico 6
 
-fig6 = px.bar(df_data,x="temporada_compra", y="id_cliente", title="Valor da Compra por Temporada")
+fig6 = px.bar(df_id,x="tipo_envio_cliente", y="id_cliente", title="Total de Clientes por Tipo de Envio")
+fig6.update_layout(
+    xaxis_title="Tipo de Envio",
+    yaxis_title="Clientes"
+)
 col6.plotly_chart(fig6, use_container_width=True)
