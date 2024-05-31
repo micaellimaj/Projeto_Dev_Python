@@ -97,8 +97,8 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 
 # Divisão da tela (Gráficos)
 
-col1, col2 = st.columns(2)
-col3, col4 = st.columns(2)
+col1, col2, col3 = st.columns(3)
+col4, col5, col6 = st.columns(3)
 
 
 # Gráfico 1
@@ -114,17 +114,40 @@ df_2 = df_data[["tamanho_item","id_cliente"]].groupby("tamanho_item").agg("count
 fig_2 = px.pie(df_2, values='id_cliente', names='tamanho_item', title='Tamanho do item por quantidade de clientes')
 col2.plotly_chart(fig_2, use_container_width=True)
 
-# Gráfico 3 
 
-df_3 = df_data[["cor_item","id_cliente"]].groupby("cor_item").agg("count").reset_index()
 
-fig_3 = px.bar(df_3,x="id_cliente", y="cor_item", title="Quantidade de Clientes por Cor do item")
-col3.plotly_chart(fig_3, use_container_width=True)
+# Fig 3
+# Corrigindo o nome da coluna para contagem de id_cliente
+df_3 = df_data.groupby(["codigo_regiao", "localização"])["id_cliente"].count().reset_index()
+
+fig3 = px.choropleth(df_3,
+                    locations='codigo_regiao', # Usando os códigos de região como localização
+                    locationmode='USA-states', # Ou 'region codes', dependendo do seu conjunto de dados
+                    color='id_cliente', # Variável de cor baseada na contagem de id_cliente
+                    hover_name='localização', # Nome da coluna para mostrar ao passar o mouse
+                    title='Contagem de Clientes por Localização',
+                    color_continuous_scale='Viridis',
+                    scope='usa'
+                    )
+col3.plotly_chart(fig3, use_container_width=True)
+# Gráfico 4
+
+df_4 = df_data[["cor_item","id_cliente"]].groupby("cor_item").agg("count").reset_index()
+
+fig_4 = px.bar(df_4,x="id_cliente", y="cor_item", title="Quantidade de Clientes por Cor do item")
+col4.plotly_chart(fig_4, use_container_width=True)
 
 # Gráfico 4 
 
-df_4 = df_data[["item_comprado","id_cliente"]].groupby("item_comprado").agg("count").reset_index()
+df_5 = df_data[["item_comprado","id_cliente"]].groupby("item_comprado").agg("count").reset_index()
 
-fig_4 = px.bar(df_4,x="id_cliente", y="item_comprado", title="Quantidade de Clientes por item comprado")
-col4.plotly_chart(fig_4, use_container_width=True)
+fig_5 = px.bar(df_5,x="id_cliente", y="item_comprado", title="Quantidade de Clientes por item comprado")
+col5.plotly_chart(fig_5, use_container_width=True)
 
+
+# Gráfico 6
+
+df_6 = df_data[["método_pagamento","id_cliente"]].groupby("método_pagamento").agg("count").reset_index()
+
+fig_6 = px.bar(df_6,y="id_cliente", x="método_pagamento", title="Quantidade de Clientes por Categoria")
+col6.plotly_chart(fig_6, use_container_width=True)

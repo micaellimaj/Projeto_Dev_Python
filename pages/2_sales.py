@@ -90,6 +90,7 @@ col3, col4, col5 = st.columns(3)
 
 # Fig 1 
 
+
 fig1 = px.box(df_data, x="método_pagamento", y="valor_compra(usd)")
 col1.plotly_chart(fig1, use_container_width=True)
 
