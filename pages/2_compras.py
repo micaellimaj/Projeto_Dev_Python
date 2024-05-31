@@ -6,7 +6,7 @@ import plotly.express as px
 
 
 
-st.set_page_config(page_title="Clothing Store - Compras", page_icon="💰", layout="wide")
+st.set_page_config(page_title="Clothing Store -  Compras", page_icon="💰", layout="wide")
 
 
 df_data = pd.read_csv("datasets/df.csv")
