@@ -69,7 +69,7 @@ st.markdown("##")
 total_compras = int(df_data["valor_compra(usd)"].sum())
 total_clientes = int(df_data["id_cliente"].count())
 media_avaliacao = round(df_data["classificação_cliente_compra"].mean(), 1)
-#star_avaliacao = ":star:" * int(round(media_avaliacao, 0))
+star_avaliacao = ":star:" * int(round(media_avaliacao, 0))
 total_transacoes = int(df_data["transações_concluidas_cliente"].sum())
 media_idade = round(df_data["idade"].mean(), 1)
 
@@ -83,7 +83,7 @@ with middle_left_column:
     st.subheader(f"{total_transacoes}")
 with middle_column:
     st.info("📊 Média de Avaliação:")
-    st.subheader(f"{media_avaliacao}")
+    st.subheader(f"{star_avaliacao}({media_avaliacao})")
 with middle_right_column:
     st.info("📊 Média de idade: ")
     st.subheader(f"{media_idade:,}")

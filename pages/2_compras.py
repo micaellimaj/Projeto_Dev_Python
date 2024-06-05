@@ -79,7 +79,7 @@ with middle_left_column:
     st.subheader(f"{total_transacoes}")
 with middle_column:
     st.info("💰 Média de Avaliação:")
-    st.subheader(f"{star_avaliacao}")
+    st.subheader(f"{star_avaliacao}({media_avaliacao})")
 with middle_right_column:
     st.info("💰 Média de idade: ")
     st.subheader(f"{media_idade:,}")
