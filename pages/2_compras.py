@@ -131,7 +131,7 @@ fig4.update_layout(
 col4.plotly_chart(fig4, use_container_width=True)
 
 # Fig 5
-fig5 = px.bar(df_data,x="tipo_envio_cliente", y="valor_compra(usd)", title="Valor da Compra por Temporada")
+fig5 = px.bar(df_data,x="tipo_envio_cliente", y="valor_compra(usd)", title="Valor da Compra por tipo de envio")
 fig5.update_layout(
     xaxis_title="Tipo de Envio",
     yaxis_title="Clientes"
