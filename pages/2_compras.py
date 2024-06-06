@@ -3,10 +3,10 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
-import matplotlib.pyplot as plt
-import plotly.graph_objects as go
+from PIL import Image
 
-st.set_page_config(page_title="Clothing Store - Compras", page_icon="💰", layout="wide")
+
+st.set_page_config(page_title="Clothing Store -  Compras", page_icon="💰", layout="wide")
 
 
 df_data = pd.read_csv("datasets/df.csv")
@@ -14,40 +14,46 @@ st.session_state["data"] = df_data
 
 
 
+
 # SIDEBAR --------------------------------------------------
-st.sidebar.image("imagem/logo.jpeg", caption="Online Clothing Store")
+with st.sidebar:
+    logo_teste = Image.open("imagem/logo.jpeg")
+    st.image(logo_teste, use_column_width=True)
+    st.subheader('Seleção de filtros:')
+    
+    # Adicione a opção "Todos" como a primeira opção para cada filtro
+    fCategoria = st.selectbox(
+        "Categoria do Cliente:",
+        options=['Todos'] + list(df_data['categoria'].unique())
+    )
+    fSexo = st.selectbox(
+        "Sexo do Cliente:",
+        options=['Todos', 'Masculino', 'Feminino']  # Adicione 'Todos' e outras opções de sexo
+    )
+    fAssinatura = st.selectbox(
+        "Cliente Assinante:",
+        options=['Todos', 'Sim', 'Não']  # Adicione 'Todos' e outras opções de assinatura
+    )
+    fDesconto = st.selectbox(
+        "Desconto na Compra:",
+        options=['Todos'] + list(df_data['desconto_compra'].unique())
+    )
+    fCodigo = st.selectbox(
+        "Código Promocional:",
+        options=['Todos'] + list(df_data['código_promocional'].unique())
+    )
 
-st.sidebar.markdown("Desenvolvido por Estudantes Unifavip")
-
-
-st.sidebar.header("Selecione um filtro : ")
-sexo = st.sidebar.multiselect(
-    "Selecione o Sexo: ",
-    options= df_data["sexo"].unique(),
-    default= df_data["sexo"].unique()
-)
-
-assinatura = st.sidebar.multiselect(
-    "O Cliente possui assinatura : ",
-    options= df_data["assinatura_cliente"].unique(),
-    default= df_data["assinatura_cliente"].unique()
-)
-
-desconto = st.sidebar.multiselect(
-    "O Cliente possui desconto: ",
-    options= df_data["desconto_compra"].unique(),
-    default= df_data["desconto_compra"].unique()
-)
-
-codigo_promocional = st.sidebar.multiselect(
-    "O Cliente possui código Promocional: ",
-    options= df_data["código_promocional"].unique(),
-    default= df_data["código_promocional"].unique()
-)
-
-df_data_selection = df_data.query(
-    "sexo == @sexo & assinatura_cliente == @assinatura & desconto_compra == @desconto & código_promocional == @codigo_promocional"
-)
+# Aplicar filtros apenas se não for selecionada a opção 'Todos'
+if fCategoria != 'Todos':
+    df_data = df_data[df_data['categoria'] == fCategoria]
+if fSexo != 'Todos':
+    df_data = df_data[df_data['sexo'] == fSexo]
+if fAssinatura != 'Todos':
+    df_data = df_data[df_data['assinatura_cliente'] == fAssinatura]
+if fDesconto != 'Todos':
+    df_data = df_data[df_data['desconto_compra'] == fDesconto]
+if fCodigo != 'Todos':
+    df_data = df_data[df_data['código_promocional'] == fCodigo]
 
 
 # Página 2
@@ -73,7 +79,7 @@ with middle_left_column:
     st.subheader(f"{total_transacoes}")
 with middle_column:
     st.info("💰 Média de Avaliação:")
-    st.subheader(f"{star_avaliacao}")
+    st.subheader(f"{star_avaliacao}({media_avaliacao})")
 with middle_right_column:
     st.info("💰 Média de idade: ")
     st.subheader(f"{media_idade:,}")
@@ -85,28 +91,18 @@ st.markdown("---")
 
 # Divisão da tela
 
-col1, col2 = st.columns(2)
-col3, col4 = st.columns(2)
-col5, col6 = st.columns(2)	
+
+col2, col3 = st.columns(2)
+col4, col5, col6 = st.columns(3)	
 
 # Fig 1 
 
-fig1 = px.treemap(df_data, path=['categoria','item_comprado'], values='valor_compra(usd)', title='Valor de Compra(usd) por categoria e itens')
-col1.plotly_chart(fig1, use_container_width=True)
+fig1 = px.treemap(df_data, path=['categoria','item_comprado','tamanho_item'], values='valor_compra(usd)', title='Valor de Compra(usd) por categoria , itens comprados e tamanho do item')
+st.plotly_chart(fig1, use_container_width=True)
+
 
 # Fig 2
-
-fig2 = px.bar(df_data,x="frequência_compras_cliente", y="valor_compra(usd)", title="Valor da Compra por Frequência de Compra do Cliente")
-fig2.update_layout(
-    xaxis_title="Frequência de Compras",
-    yaxis_title="Clientes"
-)
-col2.plotly_chart(fig2, use_container_width=True)
-
-
-
-# Fig 3
-fig3 = px.choropleth(df_data,
+fig2 = px.choropleth(df_data,
                     locations='codigo_regiao', # Substitua 'localização' pelo nome correto da coluna que contém os códigos de localização
                     locationmode='USA-states', # Ou 'region codes', dependendo do seu conjunto de dados
                     color='valor_compra(usd)', # Variável de cor
@@ -115,32 +111,38 @@ fig3 = px.choropleth(df_data,
                     color_continuous_scale='Viridis',
                     scope='usa'
                     )
-col3.plotly_chart(fig3, use_container_width=True)
+col2.plotly_chart(fig2, use_container_width=True)
 
-# fig 4
-fig4 = px.pie(df_data,values="valor_compra(usd)", names="temporada_compra", title="Valor da Compra por tipo de envio")
-fig4.update_traces(textinfo='percent+label')
-fig4.update_layout(
+# fig 3
+fig3 = px.pie(df_data,values="valor_compra(usd)", names="temporada_compra", title="Valor da Compra por temporada")
+fig3.update_traces(textinfo='percent+label')
+fig3.update_layout(
     legend_title="Temporada Compra",
     showlegend=True
 )
+col3.plotly_chart(fig3, use_container_width=True)
+
+# fig 4
+fig4 = px.bar(df_data,x="método_pagamento", y="valor_compra(usd)", title="Valor da Compra por Método de Pagamento")
+fig4.update_layout(
+    xaxis_title="Método de Pagamento",
+    yaxis_title="Clientes"
+)
 col4.plotly_chart(fig4, use_container_width=True)
 
-# fig 5 
-fig5 = px.bar(df_data,x="método_pagamento", y="valor_compra(usd)", title="Valor da Compra por Método de Pagamento")
+# Fig 5
+fig5 = px.bar(df_data,x="tipo_envio_cliente", y="valor_compra(usd)", title="Valor da Compra por tipo de envio")
 fig5.update_layout(
-    xaxis_title="Método de Pagamento",
+    xaxis_title="Tipo de Envio",
     yaxis_title="Clientes"
 )
 col5.plotly_chart(fig5, use_container_width=True)
 
-# Fig 6
-fig6 = px.bar(df_data,x="tipo_envio_cliente", y="valor_compra(usd)", title="Valor da Compra por Temporada")
+
+
+fig6 = px.bar(df_data,x="frequência_compras_cliente", y="valor_compra(usd)", title="Valor da Compra por Frequência de Compra do Cliente")
 fig6.update_layout(
-    xaxis_title="Tipo de Envio",
+    xaxis_title="Frequência de Compras",
     yaxis_title="Clientes"
 )
 col6.plotly_chart(fig6, use_container_width=True)
-
-
-
