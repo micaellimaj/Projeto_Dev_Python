@@ -25,9 +25,17 @@ with st.sidebar:
         "Categoria do Cliente:",
         options=['Todos'] + list(df_data['categoria'].unique())
     )
+    flocalizacao = st.selectbox(
+        "Localização do Cliente:",
+        options=['Todos'] + list(df_data['localização'].unique())
+    )
     fSexo = st.selectbox(
         "Sexo do Cliente:",
         options=['Todos', 'Masculino', 'Feminino']  # Adicione 'Todos' e outras opções de sexo
+    )
+    ftemporada = st.selectbox(
+        "Temporada Compra:",
+        options=['Todos'] + list(df_data['temporada_compra'].unique())
     )
     fAssinatura = st.selectbox(
         "Cliente Assinante:",
@@ -53,9 +61,10 @@ if fDesconto != 'Todos':
     df_data = df_data[df_data['desconto_compra'] == fDesconto]
 if fCodigo != 'Todos':
     df_data = df_data[df_data['código_promocional'] == fCodigo]
-
-
-
+if flocalizacao != 'Todos':
+    df_data = df_data[df_data['localização'] == flocalizacao]
+if ftemporada != 'Todos':
+    df_data = df_data[df_data['temporada_compra'] == ftemporada]
 
 
 # ----------------- MAINPAGE -----------------
