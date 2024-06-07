@@ -1,4 +1,4 @@
-# Projeto de Desenvolvimento rápido de aplicações python:
+# Projeto de Desenvolvimento rápido de aplicações python: Painel Interativo de Perfil de Compra de Clientes
 
 ## 1. Sobre o projeto: 
 
