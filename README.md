@@ -1,10 +1,14 @@
 # Projeto de Desenvolvimento rápido de aplicações python: Painel Interativo de Perfil de Compra de Clientes
 
-## 1. Sobre o projeto: 
+## 1. Arquitetura do Projeto:
+
+![Gráfico de Exemplo](painel/arquitetura.png)
+
+## 2. Sobre o projeto: 
 
 O seguinte projeto trata-se do desenvolvimento de um painel interativo construído em linguagem Python com as bibliotecas Plotly e Streamlit para visualização de dados e as bibliotecas pandas e Numpy para manipulação de dados. O dataset utilizado neste projeto foi baixado neste [link](https://www.kaggle.com/datasets/iamsouravbanerjee/customer-shopping-trends-dataset) e tem o registro de 3900 clientes com 18 colunas de uma loja de roupas dos Estados Unidos, que nesse projeto denominamos a loja com o nome “Clothing Store” e criamos uma logo para representá-la e fazer parte do painel interativo, com as visualizações, filtros e cartões, ambos, com o intuito de facilitar a tomada de decisões informadas e entregar um projeto visualmente elegante. O projeto seguiu etapas de pré-processamento de dados em um arquivo jupyter notebook e construção do painel interativo com duas páginas em arquivos py, além de discussões e planejamento sobre como entregar um projeto útil para os tomadores de decisão. 
 
-## 2. Atributos do dataset: 
+## 3. Atributos do dataset: 
 
 | Campo                  | Descrição                                                                 |
 |------------------------|--------------------------------------------------------------------------|
@@ -28,9 +32,9 @@ O seguinte projeto trata-se do desenvolvimento de um painel interativo construí
 | **Frequency of Purchases** | Frequência com que o cliente realiza compras (ex: Semanal, Quinzenal, Mensal) |
 
 
-## 3. Desenvolvimento:
+## 4. Desenvolvimento:
 
-### 3.1 Pré-processamento dos Dados
+### 4.1 Pré-processamento dos Dados
 
 * Verificação da estrutura do projeto, valores nulos e duplicatas.
 * Dados estavam em ótimo formato, sem necessidade de modificações.
@@ -41,7 +45,7 @@ O seguinte projeto trata-se do desenvolvimento de um painel interativo construí
 * Salvamento do arquivo modificado denominado como `df`.
 * Este arquivo será utilizado nas análises na etapa da construção do painel interativo.
 
-### 3.2 Painel Interativo
+### 4.2 Painel Interativo
 
 * Optou-se por  construir duas páginas com a biblioteca Streamlit:
    - **Primeira Página**: Focada na distribuição de clientes.
@@ -86,7 +90,7 @@ O seguinte projeto trata-se do desenvolvimento de um painel interativo construí
 
 📍 [Link do Deploy do Painel Interativo](https://clothingstore.streamlit.app/)
 
-## 4. Importações de Bibliotecas:
+## 5. Importações de Bibliotecas:
 
 ```
 import streamlit as st
@@ -97,7 +101,7 @@ from PIL import Image
 
 ```
 
-## 5. Estrutura do Repositório:
+## 6. Estrutura do Repositório:
 
 ------------
 
@@ -116,7 +120,7 @@ from PIL import Image
     │   
     ├── 1_clientes                <- Página principal de inicialização do projeto
     │ 
-    ├── painel                    <- Capturas do painel interativo
+    ├── painel                    <- Capturas do painel interativo e arquitetura
     │ 
     ├── datasets                  <- datasets utilizados no projeto, incluindo o arquivo original e o arquivo após o processamento.
     │   ├── dataset.HR.original   <- datasets de perfil de clientes original
@@ -124,7 +128,7 @@ from PIL import Image
     │
     └──notebook                  <- caderno jupyter notebook utilizado para o pré-processamento de dados
     
-## 6. Referências : 
+## 7. Referências : 
 
 Conteúdos de referência:
 * [youtube](https://youtu.be/nPz88occPYw?si=OeO1va0WgSn-uBAg)/
