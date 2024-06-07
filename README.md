@@ -61,6 +61,13 @@ O seguinte projeto trata-se do desenvolvimento de um painel interativo construí
    - Gráfico treemap: Categoria do produto, item comprado e tamanho do item.
 * Objetivo: Visão geral da quantidade de clientes na loja segundo diferentes atributos.
 
+<table>
+  <tr>
+    <td><img src="painel/pag1.1.png" alt="pagina1.1" width="400"/></td>
+    <td><img src="painel/pag1.2.png" alt="pagina1.2" width="400"/></td>
+  </tr>
+</table>
+
 **Segunda Página**:
 
 * Seis gráficos referentes ao valor de compra dos clientes:
@@ -69,6 +76,13 @@ O seguinte projeto trata-se do desenvolvimento de um painel interativo construí
    - Três gráficos de barra: Valores de compra por métodos de pagamento, tipo de envio e frequência de compra dos clientes.
    - Gráfico treemap: Total comprado por categoria do produto, item comprado e tamanho do item.
 * Objetivo: Visão geral da situação de compra dos clientes na loja segundo diferentes colunas do dataset.
+
+<table>
+  <tr>
+    <td><img src="painel/pag2.1.png" alt="pagina2.1" width="400"/></td>
+    <td><img src="painel/pag2.2.png" alt="pagina2.2" width="400"/></td>
+  </tr>
+</table>
 
 ## 4. Importações de Bibliotecas:
 
