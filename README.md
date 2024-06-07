@@ -2,7 +2,7 @@
 
 ## 1. Sobre o projeto: 
 
-O seguinte projeto trata-se do desenvolvimento de um painel interativo construído em linguagem Python com as bibliotecas Plotly e Streamlit para visualização de dados e as bibliotecas pandas e Numpy para manipulação de dados. O dataset utilizado neste projeto foi baixado na página referenciada nos links uteis ao final deste documento e tem o registro de 3900 clientes com 18 colunas de uma loja de roupas dos Estados Unidos, que nesse projeto denominamos a loja com o nome “Clothing Store” e criamos uma logo para representá-la e fazer parte do painel interativo, com as visualizações, filtros e cartões, ambos, com o intuito de facilitar a tomada de decisões informadas e entregar um projeto visualmente elegante. O projeto seguiu etapas de pré-processamento de dados em um arquivo jupyter notebook e construção do painel interativo com duas páginas em arquivos py, além de discussões e planejamento sobre como entregar um projeto útil para os tomadores de decisão. 
+O seguinte projeto trata-se do desenvolvimento de um painel interativo construído em linguagem Python com as bibliotecas Plotly e Streamlit para visualização de dados e as bibliotecas pandas e Numpy para manipulação de dados. O dataset utilizado neste projeto foi baixado neste [link](https://www.kaggle.com/datasets/iamsouravbanerjee/customer-shopping-trends-dataset) e tem o registro de 3900 clientes com 18 colunas de uma loja de roupas dos Estados Unidos, que nesse projeto denominamos a loja com o nome “Clothing Store” e criamos uma logo para representá-la e fazer parte do painel interativo, com as visualizações, filtros e cartões, ambos, com o intuito de facilitar a tomada de decisões informadas e entregar um projeto visualmente elegante. O projeto seguiu etapas de pré-processamento de dados em um arquivo jupyter notebook e construção do painel interativo com duas páginas em arquivos py, além de discussões e planejamento sobre como entregar um projeto útil para os tomadores de decisão. 
 
 ## 2. Atributos do dataset: 
 
@@ -84,6 +84,8 @@ O seguinte projeto trata-se do desenvolvimento de um painel interativo construí
   </tr>
 </table>
 
+📍 [Link do Deploy do Painel Interativo](https://clothingstore.streamlit.app/)
+
 ## 4. Importações de Bibliotecas:
 
 ```
@@ -105,20 +107,30 @@ from PIL import Image
     ├── LICENSE
     │
     ├── README.md                 <- O Readme de nível superior para desenvolvedores que usam esse projeto
-    │  
-    │
-    ├── Personalização            <- Contém imagens utilizadas para deixar o caderno apresentável para o usuário.
-    │
-    ├── Relatórios                <- Coleção de capturas de tela sobre todo o processo de pipeline de dados realizado na Amazon Web Service e Telegram, além de gráficos no google colab.
-    │   ├── capturas de tela      <- Coleção de capturas de tela sobre todo o processo de pipeline de dados realizado na Amazon Web Service
-    │   ├── graficos              <- Coleção de capturas de gráficos do google colab com python
-    │   ├── telegram              <- Coleção de capturas de tela do telegram
     │ 
-    ├── documentos                <- datasets utilizados no projeto, incluindo o arquivo original e o arquivo particionado.
-    │   ├── dataset.HR.original   <- datasets de recursos humanos original
-    │   ├── dataset.HR.particao   <- datasets de recursos humanos modificado
+    ├── streamlit                 <- configuração do design do layout
     │
-    └──notebook                  <- caderno jupyter notebook utilizado para contrução e apresentação do projeto
+    ├── Imagem                    <- Contém a logo do projeto
+    │
+    ├── pages                     <- Contém a páginas utilizadas no projeto, aqui apenas a 2º página
+    │   
+    ├── 1_clientes                <- Página principal de inicialização do projeto
+    │ 
+    ├── painel                    <- Capturas do painel interativo
+    │ 
+    ├── datasets                  <- datasets utilizados no projeto, incluindo o arquivo original e o arquivo após o processamento.
+    │   ├── dataset.HR.original   <- datasets de perfil de clientes original
+    │   ├── df.csv                <- datasets modificado
+    │
+    └──notebook                  <- caderno jupyter notebook utilizado para o pré-processamento de dados
     
+## 6. Referências : 
+
+Conteúdos de referência:
+* [youtube](https://youtu.be/nPz88occPYw?si=OeO1va0WgSn-uBAg)/
+[youtube](https://youtu.be/pWxDxhWXJos?si=GWELoHAVm6PRR8Cs)/
+[youtube](https://youtu.be/Sb0A9i6d320?si=i3XI849cJuHd1XdK)
+* [documentação-streamlit](https://streamlit.io/)/
+[documentação-plotly](https://plotly.com/python/)
 
 
