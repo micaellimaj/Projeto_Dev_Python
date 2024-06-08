@@ -90,7 +90,14 @@ O seguinte projeto trata-se do desenvolvimento de um painel interativo construí
 
 📍 [Link do Deploy do Painel Interativo](https://clothingstore.streamlit.app/)
 
-## 5. Importações de Bibliotecas:
+## 5. Equipe:
+
+1. [Micael José de Lima](https://github.com/micaellimaj)
+2. [Enrico Cassimiro Vertano Germânio](https://github.com/EnricoCassimiro)
+3. [Fernando Torres da Silva](https://github.com/Fernalss)
+
+
+## 6. Importações de Bibliotecas:
 
 ```
 import streamlit as st
@@ -101,7 +108,7 @@ from PIL import Image
 
 ```
 
-## 6. Estrutura do Repositório:
+## 7. Estrutura do Repositório:
 
 ------------
 
@@ -130,7 +137,7 @@ from PIL import Image
     │
     └──notebook                   <- caderno jupyter notebook utilizado para o pré-processamento de dados
     
-## 7. Referências : 
+## 8. Referências : 
 
 Conteúdos de referência:
 * [youtube](https://youtu.be/nPz88occPYw?si=OeO1va0WgSn-uBAg)/
