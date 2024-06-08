@@ -116,6 +116,8 @@ from PIL import Image
     │
     ├── Imagem                    <- Contém a logo do projeto
     │
+    ├── Documentação              <- Contém a documentação do projeto e a apresentação feita em sala de aula
+    │
     ├── pages                     <- Contém a páginas utilizadas no projeto, aqui apenas a 2º página
     │   
     ├── 1_clientes                <- Página principal de inicialização do projeto
@@ -123,10 +125,10 @@ from PIL import Image
     ├── painel                    <- Capturas do painel interativo e arquitetura
     │ 
     ├── datasets                  <- datasets utilizados no projeto, incluindo o arquivo original e o arquivo após o processamento.
-    │   ├── dataset.HR.original   <- datasets de perfil de clientes original
+    │   ├── shopping_trends.csv   <- datasets de perfil de clientes original
     │   ├── df.csv                <- datasets modificado
     │
-    └──notebook                  <- caderno jupyter notebook utilizado para o pré-processamento de dados
+    └──notebook                   <- caderno jupyter notebook utilizado para o pré-processamento de dados
     
 ## 7. Referências : 
 
